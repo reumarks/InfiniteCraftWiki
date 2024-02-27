@@ -84,17 +84,25 @@
             </div>
             <transition name="slide-up" mode="out-in">
                 <div key=0 v-if="currentElement">
-                    <button class="controls left-arrow" :style="`top:max(${scroll}px, 300px);`" @click="slideLeft"></button>
-                    <button class="controls right-arrow" :style="`top:max(${scroll}px, 300px);`" @click="slideRight"></button>
+                    <button class="controls left-arrow" :style="`top:max(${scroll}px, 300px);`"
+                        @click="slideLeft"></button>
+                    <button class="controls right-arrow" :style="`top:max(${scroll}px, 300px);`"
+                        @click="slideRight"></button>
                     <transition name="slide-right" mode="out-in">
-                        <h2 :key="currentElement" style="text-align: center;" @click="navigateTo('')">
+                        <h2 :key="currentElement" style="text-align: center; margin-bottom: 0.13em;" @click="navigateTo('')">
                             <div class="item" style=" padding: 13px 15px 12px">
                                 {{ data.index[currentElement][0] }}&nbsp;{{ data.index[currentElement][1] }}
                             </div>
                         </h2>
                     </transition>
+                    <div class="tree-container">
+                        <ul class="tree">
+                            <tree-node :node="craftingTreeData" :data="data" :root=true></tree-node>
+                        </ul>
+                    </div>
                     <div class="slider-container">
-                        <div class="slider" :style="{ transform: `translateX(calc(${-currentPanelIndex * 540}px + 50% - 810px))` }">
+                        <div class="slider"
+                            :style="{ transform: `translateX(calc(${-currentPanelIndex * 540}px + 50% - 810px))` }">
                             <div class="panel" :class="{ 'center-panel': currentPanelIndex === -1 }">
                                 <div class="ingredients-list">
                                     <h3>Created by</h3>
@@ -138,7 +146,8 @@
                                         No recipes found
                                     </div>
                                     <div v-if="currentHiddenFromLength > 0">
-                                        <div v-if="!showHiddenRecipes" class="text-link" @click="showHiddenRecipes = true">
+                                        <div v-if="!showHiddenRecipes" class="text-link"
+                                            @click="showHiddenRecipes = true">
                                             {{currentHiddenFromLength}} entries hidden
                                         </div>
                                         <div v-else class="text-link" @click="showHiddenRecipes = false">
@@ -153,33 +162,38 @@
                                     <transition name="slide-right" mode="out-in">
                                         <div :key="currentElement">
                                             <table>
-                                                <tr v-for="recipe in craftingTreeData">
-                                                    <td class="item" :class="{'item-used': !saveData.includes(recipe.A)}"
+                                                <tr v-for="recipe in craftingInstructions">
+                                                    <td class="item"
+                                                        :class="{'item-used': !saveData.includes(recipe.A)}"
                                                         @click="navigateTo(recipe.A);">
                                                         {{ data.index[recipe.A][0] }}&nbsp;{{ data.index[recipe.A][1] }}
                                                     </td>
                                                     <td>+</td>
-                                                    <td class="item" :class="{'item-used': !saveData.includes(recipe.B)}"
+                                                    <td class="item"
+                                                        :class="{'item-used': !saveData.includes(recipe.B)}"
                                                         @click="navigateTo(recipe.B);">
                                                         {{ data.index[recipe.B][0] }}&nbsp;{{ data.index[recipe.B][1] }}
                                                     </td>
                                                     <td>=</td>
-                                                    <td class="item" :class="{'item-used': !saveData.includes(recipe.C)}"
+                                                    <td class="item"
+                                                        :class="{'item-used': !saveData.includes(recipe.C)}"
                                                         @click="navigateTo(recipe.C);">
                                                         {{ data.index[recipe.C][0] }}&nbsp;{{ data.index[recipe.C][1] }}
                                                     </td>
                                                 </tr>
                                             </table>
-                                            <div v-if="craftingTreeData.length == 0 && craftingTreeReady">
-                                                <div class="item" :class="{'item-used': !saveData.includes(currentElement)}">
-                                                    {{ data.index[currentElement][0] }}&nbsp;{{ data.index[currentElement][1] }}
+                                            <div v-if="craftingInstructions.length == 0 && craftingTreeReady">
+                                                <div class="item"
+                                                    :class="{'item-used': !saveData.includes(currentElement)}">
+                                                    {{ data.index[currentElement][0] }}&nbsp;{{
+                                                    data.index[currentElement][1] }}
                                                 </div>
                                             </div>
                                         </div>
                                     </transition>
                                 </div>
                             </div>
-                            <div class="panel":class="{ 'center-panel': currentPanelIndex === 1 }">
+                            <div class="panel" :class="{ 'center-panel': currentPanelIndex === 1 }">
                                 <div class="ingredients-list">
                                     <h3>Used in</h3>
                                     <transition name="slide-right" mode="out-in" v-if="currentToLength > 0">
@@ -222,7 +236,8 @@
                                         No recipes found
                                     </div>
                                     <div v-if="currentHiddenToLength > 0">
-                                        <div v-if="!showHiddenRecipes" class="text-link" @click="showHiddenRecipes = true">
+                                        <div v-if="!showHiddenRecipes" class="text-link"
+                                            @click="showHiddenRecipes = true">
                                             {{currentHiddenToLength}} entries hidden
                                         </div>
                                         <div v-else class="text-link" @click="showHiddenRecipes = false">
@@ -235,13 +250,16 @@
                         </div>
                     </div>
                     <div class="nav-bar">
-                        <div class="nav-bar-link" :class="{ 'selected-link': currentPanelIndex === -1 }" @click="currentPanelIndex = -1">
+                        <div class="nav-bar-link" :class="{ 'selected-link': currentPanelIndex === -1 }"
+                            @click="currentPanelIndex = -1">
                             Created By
                         </div>
-                        <div class="nav-bar-link" :class="{ 'selected-link': currentPanelIndex === 0 }" @click="currentPanelIndex = 0">
+                        <div class="nav-bar-link" :class="{ 'selected-link': currentPanelIndex === 0 }"
+                            @click="currentPanelIndex = 0">
                             Crafting Recipe
                         </div>
-                        <div class="nav-bar-link" :class="{ 'selected-link': currentPanelIndex === 1 }" @click="currentPanelIndex = 1">
+                        <div class="nav-bar-link" :class="{ 'selected-link': currentPanelIndex === 1 }"
+                            @click="currentPanelIndex = 1">
                             Used In
                         </div>
                     </div>
@@ -358,6 +376,22 @@
             return Math.floor(result / 100)
         }
 
+        const TreeNode = {
+            name: 'TreeNode',
+            props: ['node', 'data', 'root'],
+            template: `
+            <li>
+                <div v-if="!root" class="item">
+                {{ data.index[node.value][0] }}&nbsp;{{ data.index[node.value][1] }}
+                </div>
+                <ul v-if="node.left || node.right">
+                    <tree-node v-if="node.left" :node="node.left" :data="data"></tree-node>
+                    <tree-node v-if="node.right" :node="node.right" :data="data"></tree-node>
+                </ul>
+            </li>
+            `
+        };
+
         const DATA_PREFIX = '/data/';
 
         // Vue app
@@ -365,7 +399,8 @@
             el: '#app',
             data: {
                 data: { index: {}, list: [], costs: {}, data: {}, metadata: { recipeCount: 0, loadedChunks: [] } },
-                craftingTreeData: [],
+                craftingInstructions: [],
+                craftingTreeData: {},
                 currentElement: "",
                 showHiddenRecipes: false,
                 searchQuery: "",
@@ -376,6 +411,9 @@
                 currentPanelIndex: 0,
                 craftingTreeReady: false,
                 scroll: 0,
+            },
+            components: {
+                TreeNode
             },
             computed: {
                 currentTo: function () {
@@ -459,14 +497,16 @@
                         if (!this.data.data[element]) {
                             this.loadChunk(getChunk(element));
                         }
-                        this.craftingTreeData = [];
+                        this.craftingTreeData = {};
+                        this.craftingInstructions = [];
                         this.craftingTreeReady = false;
                         this.calcCraftingTree(element).then(result => {
                             this.craftingTreeReady = true;
-                            this.craftingTreeData = result;
+                            this.craftingInstructions = result.instructions;
+                            this.craftingTreeData = result.tree;
                             setQuery({ e: element });
                             this.smoothScrollTo(120);
-                            if(this.currentElement == ""){
+                            if (this.currentElement == "") {
                                 this.currentPanelIndex = 0;
                             }
                             this.showHiddenRecipes = false;
@@ -508,7 +548,7 @@
 
                     const animateScroll = (currentTime) => {
                         const timeElapsed = currentTime - startTime;
-                        const run = easeInOutQuad(timeElapsed, start, position-start, duration);
+                        const run = easeInOutQuad(timeElapsed, start, position - start, duration);
 
                         window.scrollTo(0, run);
 
@@ -540,36 +580,52 @@
                 },
                 calcCraftingTree: async function (element) {
                     if (this.data.costs[element] == 1) {
-                        return [];
+                        return {
+                            instructions: [],
+                            tree: { value: element }
+                        };
                     }
 
                     let craftingList = [];
                     let usedElements = new Set();
-                    let result = [];
-                    craftingList.push(element);
+                    let instructions = [];
+                    let tree = {
+                        value: element
+                    };
+
+                    craftingList.push(tree);
 
                     while (craftingList.length > 0) {
-                        let thisElement = craftingList.shift();
-                        if (usedElements.has(thisElement)) {
+                        let currentNode = craftingList.shift();
+                        let currentElement = currentNode.value;
+                        if (this.data.costs[currentElement] == 1) {
                             continue;
                         }
-                        usedElements.add(thisElement);
 
-                        if (!this.data.data[thisElement] && thisElement != "") {
-                            await this.loadChunk(getChunk(thisElement));
+                        if (!this.data.data[currentElement] && currentElement != "") {
+                            await this.loadChunk(getChunk(currentElement));
                         }
 
-                        result.unshift({ A: this.data.data[thisElement].from[0][0], B: this.data.data[thisElement].from[0][1], C: thisElement });
+                        currentNode.left = { value: this.data.data[currentElement].from[0][0] };
+                        currentNode.right = { value: this.data.data[currentElement].from[0][1] };
 
-                        if (this.data.costs[this.data.data[thisElement].from[0][0]] != 1) {
-                            craftingList.push(this.data.data[thisElement].from[0][0]);
+                        if(!usedElements.has(currentElement)){
+                            instructions.unshift({ A: currentNode.left.value, B: currentNode.right.value, C: currentElement });
+                            usedElements.add(currentElement);
                         }
 
-                        if (this.data.costs[this.data.data[thisElement].from[0][1]] != 1) {
-                            craftingList.push(this.data.data[thisElement].from[0][1]);
+                        if (this.data.costs[currentNode.left.value] != 1) {
+                            craftingList.push(currentNode.left);
+                        }
+
+                        if (this.data.costs[currentNode.right.value] != 1) {
+                            craftingList.push(currentNode.right);
                         }
                     }
-                    return result;
+                    return {
+                        instructions: instructions,
+                        tree: tree
+                    };
                 }
             },
             mounted() {
@@ -604,12 +660,12 @@
                     .catch(error => {
                         console.error('Error loading metadata:', error);
                     });
-                    
+
                 addEventListener("popstate", (event) => this.navigateTo(getQuery().e || ""));
                 this.navigateTo(getQuery().e || "");
                 this.saveData = (getQuery().s || localStorage.getItem("saveData") || "").split(",").filter(x => x)
                 localStorage.setItem("saveData", this.saveData.join(","))
-                
+
                 document.addEventListener("scroll", function (event) {
                     var lastDiv = document.querySelector("#scroll-end");
                     if (!lastDiv) return;
