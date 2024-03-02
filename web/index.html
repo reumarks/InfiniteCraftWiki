@@ -550,14 +550,6 @@
                 },
             },
             methods: {
-                getChunk: function(value) {
-                    let base64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-='
-                    let result = 0
-                    for (let i = 0; i < value.length; i++) {
-                        result = (result * 64 + base64.indexOf(value[i]))
-                    }
-                    return Math.floor(result / 100)
-                },
                 navigateTo: function (element) {
                     if (element != "") {
                         this.craftingTreeData = null;
@@ -725,6 +717,14 @@
                     }
                     this.craftingTreeData = result;
                 },
+                getChunk: function(value) {
+                    let base64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-='
+                    let result = 0
+                    for (let i = 0; i < value.length; i++) {
+                        result = (result * 64 + base64.indexOf(value[i]))
+                    }
+                    return Math.floor(result / 100)
+                },
                 loadChunk: async function (chunk) {
                     if (this.chunkLoadState[chunk]) {
                         return this.chunkLoadState[chunk];
@@ -843,6 +843,16 @@
                         }
                         window.lastScrollTime = Date.now();
                     }
+
+                    // To contrain page size to content
+                    let currentPanels = document.getElementsByClassName('center-panel');
+                    let container = document.getElementById('container');
+                    if(currentPanels.length !== 0){
+                        let currentPanel = currentPanels[0];
+                        let bottomOfPanel = window.scrollY + currentPanel.getBoundingClientRect().bottom;
+                        container.style.height = `max(calc(100vh + 230px), ${bottomOfPanel}px)`;
+                    }
+
                 });
                 
                 // Preload initial chunks
