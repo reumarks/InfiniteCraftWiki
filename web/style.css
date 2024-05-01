@@ -33,6 +33,13 @@ body {
     outline: 1px solid #525252;
 }
 
+.item-row {
+    display: flex;
+	align-items: center;
+    justify-content: center;
+    gap: 7px;
+}
+
 .showUnavailableElements .item.item-used {
     filter: brightness(0.9);
 	outline: #9d7979 solid 1px;

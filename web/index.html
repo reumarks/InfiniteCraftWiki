@@ -175,68 +175,51 @@
                                                 style="font-weight: bold; padding-top: 5px;">
                                                 Loading data...
                                             </div>
-                                            <transition name="slide-right" mode="out-in"
-                                                v-else-if="currentFromLength > 0">
+                                            <transition name="slide-right" mode="out-in" v-else-if="currentFromLength > 0">
                                                 <div :key="currentElement">
-                                                    <table style="font-weight: bold;">
-                                                        <tr v-for="recipe in currentFrom">
-                                                            <td class="item"
+                                                    <div v-for="recipe in currentFrom" style="font-weight: bold;">
+                                                        <span class="item-row">
+                                                            <div class="item"
                                                                 :class="{'item-used': !saveData.has(recipe.A)}"
                                                                 :title="elementTitle(recipe.A)"
                                                                 @click="navigateTo(recipe.A);"
                                                                 @mouseover="loadChunk(getChunk(recipe.A))">
                                                                 {{ data.index[recipe.A][0] }}&nbsp;{{
                                                                 data.index[recipe.A][1] }}
-                                                            </td>
-                                                            <td>+</td>
-                                                            <td class="item"
+                                                            </div>
+                                                            <div>+</div>
+                                                            <div class="item"
                                                                 :class="{'item-used': !saveData.has(recipe.B)}"
                                                                 :title="elementTitle(recipe.B)"
                                                                 @click="navigateTo(recipe.B);"
                                                                 @mouseover="loadChunk(getChunk(recipe.B))">
                                                                 {{ data.index[recipe.B][0] }}&nbsp;{{
                                                                 data.index[recipe.B][1] }}
-                                                            </td>
-                                                            <td>=</td>
-                                                            <td class="item"
-                                                                :class="{'item-used': !saveData.has(recipe.C)}"
-                                                                :title="elementTitle(recipe.C)"
-                                                                @click="navigateTo(recipe.C);"
-                                                                @mouseover="loadChunk(getChunk(recipe.C))">
-                                                                {{ data.index[recipe.C][0] }}&nbsp;{{
-                                                                data.index[recipe.C][1] }}
-                                                            </td>
-                                                        </tr>
-                                                        <tr v-for="recipe in currentHiddenFrom"
-                                                            v-if="showHiddenRecipes">
-                                                            <td class="item"
+                                                            </div>
+                                                        </span>
+                                                    </div>
+                                                    <div v-for="recipe in currentHiddenFrom"
+                                                    v-if="showHiddenRecipes" style="font-weight: bold;">
+                                                        <span class="item-row">
+                                                            <div class="item"
                                                                 :class="{'item-used': !saveData.has(recipe.A)}"
                                                                 :title="elementTitle(recipe.A)"
                                                                 @click="navigateTo(recipe.A);"
                                                                 @mouseover="loadChunk(getChunk(recipe.A))">
                                                                 {{ data.index[recipe.A][0] }}&nbsp;{{
                                                                 data.index[recipe.A][1] }}
-                                                            </td>
-                                                            <td>+</td>
-                                                            <td class="item"
+                                                            </div>
+                                                            <div>+</div>
+                                                            <div class="item"
                                                                 :class="{'item-used': !saveData.has(recipe.B)}"
                                                                 :title="elementTitle(recipe.B)"
                                                                 @click="navigateTo(recipe.B);"
                                                                 @mouseover="loadChunk(getChunk(recipe.B))">
                                                                 {{ data.index[recipe.B][0] }}&nbsp;{{
                                                                 data.index[recipe.B][1] }}
-                                                            </td>
-                                                            <td>=</td>
-                                                            <td class="item"
-                                                                :class="{'item-used': !saveData.has(recipe.C)}"
-                                                                :title="elementTitle(recipe.C)"
-                                                                @click="navigateTo(recipe.C);"
-                                                                @mouseover="loadChunk(getChunk(recipe.C))">
-                                                                {{ data.index[recipe.C][0] }}&nbsp;{{
-                                                                data.index[recipe.C][1] }}
-                                                            </td>
-                                                        </tr>
-                                                    </table>
+                                                            </div>
+                                                        </span>
+                                                    </div>
                                                     <div v-if="currentHiddenFromLength > 0">
                                                         <div v-if="!showHiddenRecipes" class="text-link"
                                                             @click="showHiddenRecipes = true">
@@ -334,64 +317,48 @@
                                             <transition name="slide-right" mode="out-in"
                                                 v-else-if="currentToLength > 0">
                                                 <div :key="currentElement">
-                                                    <table style="font-weight: bold;">
-                                                        <tr v-for="recipe in currentTo">
-                                                            <td class="item"
-                                                                :class="{'item-used': !saveData.has(recipe.A)}"
-                                                                :title="elementTitle(recipe.A)"
-                                                                @click="navigateTo(recipe.A);"
-                                                                @mouseover="loadChunk(getChunk(recipe.A))">
-                                                                {{ data.index[recipe.A][0] }}&nbsp;{{
-                                                                data.index[recipe.A][1] }}
-                                                            </td>
-                                                            <td>+</td>
-                                                            <td class="item"
+                                                    <div v-for="recipe in currentTo" style="font-weight: bold;">
+                                                        <span class="item-row">
+                                                            <div class="item"
                                                                 :class="{'item-used': !saveData.has(recipe.B)}"
                                                                 :title="elementTitle(recipe.B)"
                                                                 @click="navigateTo(recipe.B);"
                                                                 @mouseover="loadChunk(getChunk(recipe.B))">
                                                                 {{ data.index[recipe.B][0] }}&nbsp;{{
                                                                 data.index[recipe.B][1] }}
-                                                            </td>
-                                                            <td>=</td>
-                                                            <td class="item"
+                                                            </div>
+                                                            <div>🡒</div>
+                                                            <div class="item"
                                                                 :class="{'item-used': !saveData.has(recipe.C)}"
                                                                 :title="elementTitle(recipe.C)"
                                                                 @click="navigateTo(recipe.C);"
                                                                 @mouseover="loadChunk(getChunk(recipe.C))">
                                                                 {{ data.index[recipe.C][0] }}&nbsp;{{
                                                                 data.index[recipe.C][1] }}
-                                                            </td>
-                                                        </tr>
-                                                        <tr v-for="recipe in currentHiddenTo" v-if="showHiddenRecipes">
-                                                            <td class="item"
-                                                                :class="{'item-used': !saveData.has(recipe.A)}"
-                                                                :title="elementTitle(recipe.A)"
-                                                                @click="navigateTo(recipe.A);"
-                                                                @mouseover="loadChunk(getChunk(recipe.A))">
-                                                                {{ data.index[recipe.A][0] }}&nbsp;{{
-                                                                data.index[recipe.A][1] }}
-                                                            </td>
-                                                            <td>+</td>
-                                                            <td class="item"
+                                                            </div>
+                                                        </span>
+                                                    </div>
+                                                    <div v-for="recipe in currentHiddenTo" v-if="showHiddenRecipes" style="font-weight: bold;">
+                                                        <span class="item-row">
+                                                            <div class="item"
                                                                 :class="{'item-used': !saveData.has(recipe.B)}"
                                                                 :title="elementTitle(recipe.B)"
                                                                 @click="navigateTo(recipe.B);"
                                                                 @mouseover="loadChunk(getChunk(recipe.B))">
                                                                 {{ data.index[recipe.B][0] }}&nbsp;{{
                                                                 data.index[recipe.B][1] }}
-                                                            </td>
-                                                            <td>=</td>
-                                                            <td class="item"
+                                                            </div>
+                                                            <div>🡒</div>
+                                                            <div class="item"
                                                                 :class="{'item-used': !saveData.has(recipe.C)}"
                                                                 :title="elementTitle(recipe.C)"
                                                                 @click="navigateTo(recipe.C);"
                                                                 @mouseover="loadChunk(getChunk(recipe.C))">
                                                                 {{ data.index[recipe.C][0] }}&nbsp;{{
                                                                 data.index[recipe.C][1] }}
-                                                            </td>
-                                                        </tr>
-                                                    </table>
+                                                            </div>
+                                                        </span>
+                                                    </div>
                                                     <div v-if="currentHiddenToLength > 0">
                                                         <div v-if="!showHiddenRecipes" class="text-link"
                                                             @click="showHiddenRecipes = true">
